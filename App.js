@@ -1,21 +1,122 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import React, {Component} from 'react';
+import {View, Text} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from "@react-navigation/stack"
+import Landing from "./components/auth/Landing"
+import Register from './components/auth/Register';
+import Login from './components/auth/Login';
+import firebase from 'firebase/app';
+import { Provider } from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
+import rootReducer from "./redux/reducers"
+import thunk from 'redux-thunk'
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+import Main from './components/Main';
+
+// TODO: remove variables and use environmental
+const firebaseConfig = {
+  apiKey: "AIzaSyC4B_FLPiE6sBAkS1_7fHQEyYnb6goHoag",
+  authDomain: "instagram-clone-da9d4.firebaseapp.com",
+  projectId: "instagram-clone-da9d4",
+  storageBucket: "instagram-clone-da9d4.appspot.com",
+  messagingSenderId: "321782520322",
+  appId: "1:321782520322:web:be4e65f56646de091be51b",
+  measurementId: "G-81EQKB2248"
+};
+
+
+
+
+if (firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseConfig)
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const stack = createStackNavigator();
+
+
+export class App extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      loaded: false,
+    }
+  }
+  componentDidMount(){
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        this.setState({
+          loggedIn: false,
+          loaded: true,
+        })
+      }
+      else {
+        this.setState({
+          loggedIn: true,
+          loaded: true,
+        })
+      }
+    })
+  }
+  render() {
+    const {
+      loggedIn,
+      loaded,
+    } = this.state
+
+    if (!loaded){
+      return (
+        <View style = {{
+          flex: 1,
+          justifyContent: 'center',
+      }}>
+          <Text>
+            Loading...
+          </Text>
+        </View>
+      )
+    }
+
+    if (!loggedIn) {
+    return (
+      <NavigationContainer>
+      <stack.Navigator initialRouteName="Landing">
+        <stack.Screen 
+        name="Landing"
+        component = {Landing}
+        options = {{headerShown: false}}
+        />
+        <stack.Screen 
+        name="Register"
+        component = {Register}
+        options = {{headerShown: false}}
+        />
+        <stack.Screen 
+        name="Login"
+        component = {Login}
+        options = {{headerShown: false}}
+        />
+      </stack.Navigator>
+        
+    </NavigationContainer>
+    )
+    }
+
+    return (
+      <View style = {{
+        flex: 1,
+        justifyContent: 'center',
+    }}>
+      <Text>
+        Logged in
+        </Text>
+      </View>
+    )
+  }
+}
+
+export default App
+
+
