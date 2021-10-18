@@ -105,14 +105,7 @@ export class App extends Component {
     }
 
     return (
-      <View style = {{
-        flex: 1,
-        justifyContent: 'center',
-    }}>
-      <Text>
-        Logged in
-        </Text>
-      </View>
+      <Main/>
     )
   }
 }
