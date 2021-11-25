@@ -5,29 +5,21 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import { fetchUser } from '../redux/actions/index';
 
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Feed from './main/Feed';
+const Tab = createBottomTabNavigator();
+
 
 export class Main extends Component {
     componentDidMount(){
-        this.props.fetchUser;
+        this.props.fetchUser();
     }
     render() {
-
-        const{currentUser} = this.props;
-        console.log(currentUser)
-        if (currentUser == undefined){
-            return(
-                <View> 
-
-                </View>
-            )
-        }
         return (
-            <View style = {{
-                flex: 1,
-                justifyContent: 'center',
-            }}>
-                <Text> {currentUser.name} is logged in</Text>
-                </View>
+                <Tab.Navigator>
+        <Tab.Screen name="Feed" component={Feed} />
+        </Tab.Navigator>
+           
         )
     }
 }
@@ -35,6 +27,6 @@ export class Main extends Component {
 const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser,
 })
- const mapDispatchProps = (dispatch) => bindActionCreators;
+ const mapDispatchProps = (dispatch) => bindActionCreators({fetchUser}, dispatch);
 
-export default Main
+export default connect(mapStateToProps, mapDispatchProps)(Main);

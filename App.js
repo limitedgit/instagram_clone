@@ -105,7 +105,19 @@ export class App extends Component {
     }
 
     return (
-      <Main/>
+      <Provider store = {store}>
+        <NavigationContainer>
+      <stack.Navigator initialRouteName="Main">
+        <stack.Screen 
+        name="Main"
+        component = {Main}
+        options = {{headerShown: false}}
+        />
+      </stack.Navigator>
+        
+    </NavigationContainer>
+      </Provider>
+ 
     )
   }
 }
