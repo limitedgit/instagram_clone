@@ -6,8 +6,14 @@ import {bindActionCreators} from 'redux';
 import { fetchUser } from '../redux/actions/index';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Feed from './main/Feed';
+import Add from './main/Add';
+import Profile from './main/Profile';
 const Tab = createBottomTabNavigator();
+const EmptyScreen = ()=> {
+    return(null);
+}
 
 
 export class Main extends Component {
@@ -17,7 +23,30 @@ export class Main extends Component {
     render() {
         return (
                 <Tab.Navigator>
-        <Tab.Screen name="Feed" component={Feed} />
+        <Tab.Screen name="Feed" component={Feed} 
+        options = {{
+            tabBarIcon: ({color, size}) => (
+                <MaterialCommunityIcons name = "home" color = {color} size = {26}/>
+            ),
+        }}/>
+        <Tab.Screen name="AddContainer" component={EmptyScreen} 
+        listeners = {({ navigation}) => ({
+            tabPress: event =>{
+                event.preventDefault();
+                navigation.navigate('Add')
+            }
+        })}
+        options = {{
+            tabBarIcon: ({color, size}) => (
+                <MaterialCommunityIcons name = "plus-box" color = {color} size = {26}/>
+            ),
+        }}/>
+        <Tab.Screen name="Profile" component={Profile} 
+        options = {{
+            tabBarIcon: ({color, size}) => (
+                <MaterialCommunityIcons name = "account-circle" color = {color} size = {26}/>
+            ),
+        }}/>
         </Tab.Navigator>
            
         )

@@ -14,6 +14,7 @@ import thunk from 'redux-thunk'
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 import Main from './components/Main';
+import Add from './components/main/Add';
 
 // TODO: remove variables and use environmental
 const firebaseConfig = {
@@ -111,6 +112,11 @@ export class App extends Component {
         <stack.Screen 
         name="Main"
         component = {Main}
+        options = {{headerShown: false}}
+        />
+        <stack.Screen 
+        name="Add"
+        component = {Add}
         options = {{headerShown: false}}
         />
       </stack.Navigator>
