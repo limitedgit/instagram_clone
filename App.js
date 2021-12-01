@@ -117,7 +117,6 @@ export class App extends Component {
         <stack.Screen 
         name="Add"
         component = {Add}
-        options = {{headerShown: false}}
         />
       </stack.Navigator>
         
