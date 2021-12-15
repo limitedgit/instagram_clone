@@ -15,6 +15,7 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 
 import Main from './components/Main';
 import Add from './components/main/Add';
+import Save  from './components/main/Save';
 
 // TODO: remove variables and use environmental
 const firebaseConfig = {
@@ -116,8 +117,13 @@ export class App extends Component {
         />
         <stack.Screen 
         name="Add"
-        component = {Add}
+        component = {Add} 
+        navigation = {this.props.navigation}
+        /><stack.Screen 
+        name="Save"
+        component = {Save}
         />
+        
       </stack.Navigator>
         
     </NavigationContainer>
