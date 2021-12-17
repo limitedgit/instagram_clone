@@ -33,6 +33,8 @@ const firebaseConfig = {
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig)
+} else {
+  console.log("FAIL")
 }
 
 const stack = createStackNavigator();
