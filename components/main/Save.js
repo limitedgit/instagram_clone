@@ -64,7 +64,7 @@ export default function Save(props, navigation) {
         <View style={{flex: 1}}>
             <Image source = {{uri: props.route.params.image}}/>
             <TextInput
-            placeholder='wite a description'
+            placeholder='write a description'
             onChangeText = {(caption)=> {setCaption(caption)}}
             />
             <Button title = "Save" onPress={() => uploadImage()}/>
